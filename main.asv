@@ -1,0 +1,13 @@
+%% Main function for 3801 lab 5
+clear;clc;close all;
+% initialize aircraft_parameters struct
+run("ttwistor.m")
+
+%% Problem 2.1
+% initial fl
+x0 = [0; 0; -1609.34; 0; 0; 0; 21; 0; 0; 0; 0; 0];
+      % position      attitude velocity  omega
+tspan = [0 20];
+options = odeset("RelTol",10e-8,"AbsTol",10e-8);
+
+[t,x] = ode45(@(t,x) AircraftEOM(t, x, aircraft_surfaces, wind_inertial, aircraft_parameters));
