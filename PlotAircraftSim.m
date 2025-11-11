@@ -162,7 +162,7 @@ hold on
 grid on
 title("Throttle Input")
 xlabel("Time (s)")
-ylabel("Throttle")
+ylabel("Throttle Fraction")
 xlim([0, 1])
 
 sgtitle("Control Variables of Quadrotor Over Time")
