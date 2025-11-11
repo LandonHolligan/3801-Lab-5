@@ -13,11 +13,12 @@ function xdot = AircraftEOMDoublet(time, aircraft_state, aircraft_surfaces, doub
     Iy = aircraft_parameters.Iy;
     Iz = aircraft_parameters.Iz;
     Ixz = aircraft_parameters.Ixz;
+    density = stdatmo(var(3));
 
     de = aircraft_surfaces(1,1);
     if time < doublet_time
         de = de + doublet_size;
-    else if(time < 2* doublet_time)
+    elseif(time < 2* doublet_time)
         de = de - doublet_size;
     else
         de = de_trim;
