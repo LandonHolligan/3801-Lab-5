@@ -5,17 +5,17 @@ ap = aircraft_parameters;
 [aero_forces, aero_moments] = AeroForcesAndMoments(aircraft_state, aircraft_surfaces, wind_inertial, density, aircraft_parameters);
 
 
-phi = var(4); 
-theta = var(5); 
-psi = var(6);
+phi = aircraft_state(4); 
+theta = aircraft_state(5); 
+psi = aircraft_state(6);
 
-u = var(7); 
-v = var(8); 
-w = var(9);
+u = aircraft_state(7); 
+v = aircraft_state(8); 
+w = aircraft_state(9);
 
-p = var(10); 
-q = var(11); 
-r = var(12);
+p = aircraft_state(10); 
+q = aircraft_state(11); 
+r = aircraft_state(12);
 
 cphi = cos(phi); 
 sphi = sin(phi);
@@ -24,7 +24,9 @@ sth = sin(theta);
 cpsi = cos(psi); 
 spsi = sin(psi);
 
-R_BE = [cth*cpsi, sphi*sth*cpsi - cphi*spsi, cphi*sth*cpsi + sphi*spsi; cth*spsi, sphi*sth*spsi + cphi*cpsi, cphi*sth*spsi - sphi*cpsi; -sth, sphi*cth, cphi*cth];
+R_BE = [cth*cpsi, sphi*sth*cpsi - cphi*spsi, cphi*sth*cpsi + sphi*spsi; 
+    cth*spsi, sphi*sth*spsi + cphi*cpsi, cphi*sth*spsi - sphi*cpsi; 
+    -sth, sphi*cth, cphi*cth];
 
 X = aero_forces(1);
 Y = aero_forces(2);
