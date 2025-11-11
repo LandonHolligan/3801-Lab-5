@@ -1,0 +1,78 @@
+function xdot = AircraftEOMDoublet(time, aircraft_state, aircraft_surfaces, doublet_size, doublet_time, wind_inertial, aircraft_parameters)
+    % devectorize
+    phi = var(4);
+    theta = var(5);
+    psi = var(6);
+    u_E = var(7);
+    v_E = var(8);
+    w_E = var(9);
+    p = var(10);
+    q = var(11);
+    r = var(12);
+    Ix = aircraft_parameters.Ix;
+    Iy = aircraft_parameters.Iy;
+    Iz = aircraft_parameters.Iz;
+    Ixz = aircraft_parameters.Ixz;
+
+    de = aircraft_surfaces(1,1);
+    if time < doublet_time
+        de = de + doublet_size;
+    else if(time < 2* doublet_time)
+        de = de - doublet_size;
+    else
+        de = de_trim;
+    end
+    aircraft_surfaces(1,1) = de;
+
+
+    gamma = (Ix*Iz)+(Ixz^2);
+    gamma1 = (Ixz*(Ix-Iy+Iz))/gamma;
+    gamma2 = ((Iz*(Iz-Iy))+(Ixz^2))/gamma;
+    gamma3 = Iz/gamma;
+    gamma4 = Ixz/gamma;
+    gamma5 = (Iz-Ix)/Iy;
+    gamma6 = Ixz/Iy;
+    gamma7 = ((Ix*(Ix-Iy))+(Ixz^2))/gamma;
+    gamma8 = Ix/gamma;
+
+
+    [aero_forces, aero_moments] = AeroForcesAndMoments(aircraft_state, aircraft_surfaces, wind_inertial, density, aircraft_parameters);
+
+    X = aero_forces(1);
+    Y = aero_forces(2);
+    Z = aero_forces(3);
+
+    L = aero_moments(1);
+    M = aero_moments(2);
+    N = aero_moments(3);
+
+    x_E_dot = (cos(theta)*cos(psi)*u_E) + (((sin(phi)*sin(theta)*cos(psi))-(cos(phi)*sin(psi)))*v_E) + (((cos(phi)*sin(theta)*cos(psi))+(sin(phi)*sin(psi)))*w_E);
+    y_E_dot = (cos(theta)*sin(psi)*u_E) + (((sin(phi)*sin(theta)*sin(psi))+(cos(phi)*cos(psi)))*v_E) + (((cos(phi)*sin(theta)*sin(psi))-(sin(phi)*cos(psi)))*w_E);
+    z_E_dot = (-sin(theta)*u_E) + (sin(phi)*cos(theta)*v_E) + (cos(phi)*cos(theta)*w_E);
+
+    phi_dot = p + (sin(phi)*tan(theta)*q) + (cos(phi)*tan(theta)*r);
+    theta_dot = (cos(phi)*q) - (sin(phi)*r);
+    psi_dot = (sin(phi)*sec(theta)*q) + (cos(phi)*sec(theta)*r);
+
+    u_E_dot = (r*v_E)-(q*w_E) - (sin(theta)*g) + (X/m);
+    v_E_dot = (p*w_E)-(r*u_E) + (cos(theta)*sin(phi)*g) + (Y/m);
+    w_E_dot = (q*u_E)-(p*v_E) + (cos(theta)*cos(phi)*g) + (Z/m);
+
+    p_dot = (gamma1*p*q) - (gamma2*q*r) + ((gamma3*L)+(gamma4*N));
+    q_dot = (gamma5*p*r) - (gamma6*((p^2)-(r^2))) + (M/Iz);
+    r_dot = (gamma7*p*q) - (gamma1*q*r) + (gamma4*L) + (gamma8*N);
+
+
+    xdot = [x_E_dot;
+        y_E_dot;
+        z_E_dot;
+        phi_dot;
+        theta_dot;
+        psi_dot;
+        u_E_dot;
+        v_E_dot;
+        w_E_dot;
+        p_dot;
+        q_dot;
+        r_dot];
+end
