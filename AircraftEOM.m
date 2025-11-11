@@ -4,9 +4,6 @@ density = atmosisa(abs(aircraft_state(3)));
 ap = aircraft_parameters;
 [aero_forces, aero_moments] = AeroForcesAndMoments(aircraft_state, aircraft_surfaces, wind_inertial, density, aircraft_parameters);
 
-xE = var(1); 
-yE = var(2); 
-zE = var(3);
 
 phi = var(4); 
 theta = var(5); 
@@ -37,18 +34,18 @@ L = aero_moments(1);
 M = aero_moments(2);
 N = aero_moments(3);
 
-u_dot = r * v - q * w - g * sth + (1 / m) * X;
-v_dot = p * w - r * u + g * sphi * cth + (1 / m) * Y;
-w_dot = q * u - p * v + g * cphi * cth + (1 / m) * Z;
+u_dot = r * v - q * w - ap.g * sth + (1 / ap.m) * X;
+v_dot = p * w - r * u + ap.g * sphi * cth + (1 / ap.m) * Y;
+w_dot = q * u - p * v + ap.g * cphi * cth + (1 / ap.m) * Z;
 
 gamma = ap.Ix * ap.Iz - ap.Ixz^2;
 gamma1 = (ap.Ixz*(ap.Ix-ap.Iy+ap.Iz))/ gamma;
-gamma2 = (ap.Iz(ap.Iz-ap.Iy)+ap.Ixz^2) / gamma;
+gamma2 = (ap.Iz*(ap.Iz - ap.Iy)+ap.Ixz^2) / gamma;
 gamma3 = ap.Iz / gamma;
 gamma4 = ap.Ixz / gamma;
 gamma5 = (ap.Iz - ap.Ix) / ap.Iy;
 gamma6 = ap.Ixz / ap.Iy;
-gamma7 = (ap.Ix(ap.Ix - ap.Iy)+ap.Ixz^2)/gamma;
+gamma7 = (ap.Ix*(ap.Ix - ap.Iy)+ap.Ixz^2)/gamma;
 gamma8 = ap.Ix / gamma;
 
 p_dot = gamma1 * p * q - gamma2 * q * r + gamma3 * L + gamma4 * N;
