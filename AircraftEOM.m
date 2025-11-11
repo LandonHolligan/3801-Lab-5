@@ -1,6 +1,6 @@
 function xdot = AircraftEOM(time, aircraft_state, aircraft_surfaces, wind_inertial, aircraft_parameters)
 
-density = stdatmo(abs(aircraft_state(3)));
+density = atmosisa(abs(aircraft_state(3)));
 ap = aircraft_parameters;
 [aero_forces, aero_moments] = AeroForcesAndMoments(aircraft_state, aircraft_surfaces, wind_inertial, density, aircraft_parameters);
 

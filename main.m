@@ -32,4 +32,19 @@ wind_inertial = zeros(3,1);
 [t,x] = ode45(@(t,x) AircraftEOM(t, x, aircraft_surfaces, wind_inertial, aircraft_parameters), tspan, x0, options);
 
 % plot results
-PlotAircraftSim(t, x, aircraft_surfaces, 1:6, "r")
+PlotAircraftSim(t, x, aircraft_surfaces, 7:12, "r")
+
+%% Problem 2.3 
+% initialize flight conditions
+x0 = [0; 0; -1800;
+    15; -12; 270;
+    19; 3; -2;
+    0.08; -0.2; 0];
+aircraft_surfaces = [5; 2; -13; 0.3];
+wind_inertial = zeros(3,1);
+
+% setup and call ode45
+[t,x] = ode45(@(t,x) AircraftEOM(t, x, aircraft_surfaces, wind_inertial, aircraft_parameters), tspan, x0, options);
+
+% plot results
+PlotAircraftSim(t, x, aircraft_surfaces, 13:18, "r")
