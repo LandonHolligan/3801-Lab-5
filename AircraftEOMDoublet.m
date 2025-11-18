@@ -1,27 +1,29 @@
 function xdot = AircraftEOMDoublet(time, aircraft_state, aircraft_surfaces, doublet_size, doublet_time, wind_inertial, aircraft_parameters)
     % devectorize
-    phi = var(4);
-    theta = var(5);
-    psi = var(6);
-    u_E = var(7);
-    v_E = var(8);
-    w_E = var(9);
-    p = var(10);
-    q = var(11);
-    r = var(12);
+    phi = aircraft_state(4);
+    theta = aircraft_state(5);
+    psi = aircraft_state(6);
+    u_E = aircraft_state(7);
+    v_E = aircraft_state(8);
+    w_E = aircraft_state(9);
+    p = aircraft_state(10);
+    q = aircraft_state(11);
+    r = aircraft_state(12);
     Ix = aircraft_parameters.Ix;
     Iy = aircraft_parameters.Iy;
     Iz = aircraft_parameters.Iz;
     Ixz = aircraft_parameters.Ixz;
-    density = stdatmo(var(3));
-
+    g = aircraft_parameters.g;
+    m = aircraft_parameters.m;
+    density = stdatmo(abs(aircraft_state(3)));
     de = aircraft_surfaces(1,1);
+    
     if time < doublet_time
         de = de + doublet_size;
     elseif(time < 2* doublet_time)
         de = de - doublet_size;
     else
-        de = de_trim;
+        %de = de_trim;
     end
     aircraft_surfaces(1,1) = de;
 
