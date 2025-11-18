@@ -40,6 +40,7 @@ PlotAircraftSim(t, x', surfaces_matrix, 7:12, "r")
 
 %% Problem 2.3 
 % initialize flight conditions
+
 x0 = [0; 0; -1800;
     deg2rad(15); deg2rad(-12); deg2rad(270);
     19; 3; -2;
@@ -55,9 +56,9 @@ tspan = [0 150];
 surfaces_matrix = repmat(aircraft_surfaces,1,length(t));
 PlotAircraftSim(t, x', surfaces_matrix, 13:18, "r")
 
-%% problem 3
+%% problem 3.1
 
-tspan = [0 150];
+tspan = [0 100];
 options = odeset("RelTol",10e-8,"AbsTol",10e-8);
 
 
@@ -74,7 +75,21 @@ doublet_time = 0.25;
 % setup and call ode45
 [tdot,xdot] = ode45(@(tspan,x0) AircraftEOMDoublet(tspan, x0, aircraft_surfaces, doublet_size, doublet_time, wind_inertial, aircraft_parameters), tspan, x0, options);
 
-% plot results
-surfaces_matrix = repmat(aircraft_surfaces,1,length(tdot));
-PlotAircraftSim(tdot, xdot', surfaces_matrix, 19:24, "r")
+% plot results for 0.5 to 1.5 seconds
+ind = (tdot(:,1) >= 0.5 & tdot(:,1) <= 1.5);
+tdot_3_1 = tdot(ind);
+xdot_3_1 = xdot(ind,:);
+surfaces_matrix_3_1 = repmat(aircraft_surfaces,1,length(tdot_3_1));
 
+
+PlotAircraftSim(tdot_3_1, transpose(xdot_3_1), surfaces_matrix_3_1, 19:24, "r")
+
+%% Problem 3.2 
+% plot results for 0.5 to 100 seconds
+ind = (tdot(:,1) >= 0.5 & tdot(:,1) <= 100);
+tdot_3_2 = tdot(ind);
+xdot_3_2 = xdot(ind,:);
+surfaces_matrix_3_2 = repmat(aircraft_surfaces,1,length(tdot_3_2));
+
+
+PlotAircraftSim(tdot_3_2, transpose(xdot_3_2), surfaces_matrix_3_2, 25:30, "r")
