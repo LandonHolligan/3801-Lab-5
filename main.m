@@ -73,5 +73,6 @@ doublet_time = 0.25;
 [tdot,xdot] = ode45(@(tspan,x0) AircraftEOMDoublet(tspan, x0, aircraft_surfaces, doublet_size, doublet_time, wind_inertial, aircraft_parameters), tspan, x0, options);
 
 % plot results
-PlotAircraftSim(tdot, transpose(xdot), aircraft_surfaces, 19:24, "r")
+surfaces_matrix = repmat(aircraft_surfaces,1,length(tdot));
+PlotAircraftSim(tdot, xdot', surfaces_matrix, 19:24, "r")
 
