@@ -44,7 +44,7 @@ function PlotAircraftSim(time, aircraft_state_array, control_input_array, fig, c
     xlabel("Time (s)")
     ylabel("Inertial Position (m)")
     
-    sgtitle("Inertial Position of Quadrotor Over Time")
+    sgtitle("Inertial Position of Aircraft Over Time")
     
     % subplots for euler angles 
     figure(fig(2))
@@ -72,7 +72,7 @@ function PlotAircraftSim(time, aircraft_state_array, control_input_array, fig, c
     xlabel("Time (s)")
     ylabel("Euler Angles (rad)")
     
-    sgtitle("Euler Angles of Quadrotor Over Time")
+    sgtitle("Euler Angles of Aircraft Over Time")
     
     % subplots for inertial velocity in body frame
     figure(fig(3))
@@ -100,7 +100,7 @@ function PlotAircraftSim(time, aircraft_state_array, control_input_array, fig, c
     xlabel("Time (s)")
     ylabel("Inertial Velocity (m/s)")
     
-    sgtitle("Inertial Velocity of Quadrotor in Body Frame Over Time")
+    sgtitle("Inertial Velocity of Aircraft in Body Frame Over Time")
     
     % subplots for angular velocity
     figure(fig(4))
@@ -128,7 +128,7 @@ function PlotAircraftSim(time, aircraft_state_array, control_input_array, fig, c
     xlabel("Time (s)")
     ylabel("Angular Velocity (rad/s)")
     
-    sgtitle("Angular Velocity of Quadrotor Over Time")
+    sgtitle("Angular Velocity of Aircraft Over Time")
     
     % subplots for each control variable
     figure(fig(5))
@@ -163,9 +163,8 @@ function PlotAircraftSim(time, aircraft_state_array, control_input_array, fig, c
     title("Throttle Input")
     xlabel("Time (s)")
     ylabel("Throttle Fraction")
-    xlim([0, 1])
     
-    sgtitle("Control Variables of Quadrotor Over Time")
+    sgtitle("Control Variables of Aircraft Over Time")
     
     % three dimensional path of aircraft
     figure(fig(6))

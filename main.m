@@ -30,6 +30,7 @@ aircraft_surfaces = [0.1079; 0; 0; 0.3182];
 wind_inertial = zeros(3,1);
 
 % call ode45
+tspan = [0 60];
 [t,x] = ode45(@(t,x) AircraftEOM(t, x, aircraft_surfaces, wind_inertial, aircraft_parameters), tspan, x0, options);
 
 % plot results
@@ -47,6 +48,7 @@ aircraft_surfaces = [deg2rad(5); deg2rad(2); deg2rad(-13); 0.3];
 wind_inertial = zeros(3,1);
 
 % call ode45
+tspan = [0 150];
 [t,x] = ode45(@(t,x) AircraftEOM(t, x, aircraft_surfaces, wind_inertial, aircraft_parameters), tspan, x0, options);
 
 % plot results
