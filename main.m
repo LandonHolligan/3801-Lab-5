@@ -55,23 +55,23 @@ PlotAircraftSim(t, x', surfaces_matrix, 13:18, "r")
 
 %% problem 3
 
-tspan = [0 20];
+tspan = [0 150];
 options = odeset("RelTol",10e-8,"AbsTol",10e-8);
 
 
 % initialize flight conditions
 x0 = [0; 0; -1800;
-    0; rad2deg(0.02780); 0;
+    0; 0.02780; 0;
     20.99; 0; 0.5837;
     0; 0; 0];
-aircraft_surfaces = [rad2deg(0.1079); 0; 0; 0.3182];
+aircraft_surfaces = [0.1079; 0; 0; 0.3182];
 wind_inertial = zeros(3,1);
-doublet_size = 15;
+doublet_size = deg2rad(15);
 doublet_time = 0.25;
 
 % setup and call ode45
 [tdot,xdot] = ode45(@(tspan,x0) AircraftEOMDoublet(tspan, x0, aircraft_surfaces, doublet_size, doublet_time, wind_inertial, aircraft_parameters), tspan, x0, options);
 
 % plot results
-PlotAircraftSim(t, x, aircraft_surfaces, 19:24, "r")
+PlotAircraftSim(tdot, transpose(xdot), aircraft_surfaces, 19:24, "r")
 
